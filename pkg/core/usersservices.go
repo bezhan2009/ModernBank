@@ -119,7 +119,7 @@ func PublicServices(database *sql.DB, user models.User) {
 }
 
 func PrintingListOfAccounts(database *sql.DB, User models.User) {
-	rows, err := database.Query(db.SelectAccountByUser_id, User.ID)
+	rows, err := database.Query(db.SelectaccountbyuserId, User.ID)
 	if err != nil {
 		fmt.Println("Error while printing list of accounts. Error is", err)
 	}
@@ -191,19 +191,19 @@ func CheckTransfer(amount int64, accountFrom, accountTo models.Account) (status 
 	return status
 }
 
-func TransferOperation(database *sql.DB, amount int64, accountFrom, accountTo models.Account) (err error){
+func TransferOperation(database *sql.DB, amount int64, accountFrom, accountTo models.Account) (err error) {
 	tx, err := database.Begin()
 	if err != nil {
 		return err
 	}
-	defer func(){
+	defer func() {
 		if err != nil {
 			_ = tx.Rollback()
 			return
 		}
 		err = tx.Commit()
 	}()
-	
+
 	models.AddNewTransactionHistory(database, accountFrom.Number, accountTo.Number, amount)
 	accountFrom.Amount -= amount
 	accountTo.Amount += amount

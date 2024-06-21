@@ -2,7 +2,7 @@ package db
 
 const UpadateAccountsAmount = `UPDATE accounts set amount = $1 where number = $2`
 
-const SelectAccountByUser_id = `SELECT * FROM accounts where user_id = ($1)`
+const SelectaccountbyuserId = `SELECT * FROM accounts where user_id = ($1)`
 
 const SelectAccountByNumber = `SELECT * FROM accounts WHERE number = ($1)`
 
