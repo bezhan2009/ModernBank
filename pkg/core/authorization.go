@@ -34,6 +34,21 @@ func SearchingUserInDB(database *sql.DB, login, password string) (User models.Us
 	return User
 }
 
+func GetAllUsersInDB(database *sql.DB) (User models.User) {
+	database.QueryRow(`SELECT * FROM users`).Scan(
+		&User.ID,
+		&User.Name,
+		&User.Surname,
+		&User.Age,
+		&User.Gender,
+		&User.Role,
+		&User.Login,
+		&User.Password,
+		&User.Removed,
+	)
+	return User
+}
+
 func Authorization(database *sql.DB) {
 	login, password := AskingLogin()
 	User := SearchingUserInDB(database, login, password)
